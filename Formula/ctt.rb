@@ -1,33 +1,33 @@
 class Ctt < Formula
-  desc "ClaudeCode Task management on Tmux"
+  desc "Claude Code task management on terminal workspaces (herdr or tmux)"
   homepage "https://github.com/foresta/ctt"
   version "0.1.0"
   license "Apache-2.0"
+
+  # MoonBit only ships an arm64 toolchain for macOS, so there is no Intel build.
+  depends_on :macos
+  depends_on arch: :arm64
 
   on_macos do
     on_arm do
       url "https://github.com/foresta/ctt/releases/download/v#{version}/ctt-v#{version}-darwin-arm64.tar.gz"
       sha256 "PLACEHOLDER_ARM64_SHA256"
     end
-
-    on_intel do
-      url "https://github.com/foresta/ctt/releases/download/v#{version}/ctt-v#{version}-darwin-x64.tar.gz"
-      sha256 "PLACEHOLDER_X64_SHA256"
-    end
   end
 
   def install
     bin.install "ctt"
-    pkgshare.install ".worktree-link-ignore"
+    pkgshare.install ".worktree-link-ignore", "config.toml"
   end
 
+  # Seed the default config files once; never overwrite what the user edited.
   def post_install
     config_dir = "#{Dir.home}/.config/ctt"
-    target = "#{config_dir}/.worktree-link-ignore"
-    return if File.exist?(target)
-
     FileUtils.mkdir_p(config_dir)
-    FileUtils.cp("#{pkgshare}/.worktree-link-ignore", target)
+    [".worktree-link-ignore", "config.toml"].each do |name|
+      target = "#{config_dir}/#{name}"
+      FileUtils.cp("#{pkgshare}/#{name}", target) unless File.exist?(target)
+    end
   end
 
   test do
