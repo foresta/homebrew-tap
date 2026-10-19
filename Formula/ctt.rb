@@ -1,7 +1,7 @@
 class Ctt < Formula
   desc "Claude Code task management on terminal workspaces (herdr or tmux)"
   homepage "https://github.com/foresta/ctt"
-  version "0.1.0"
+  version "0.2.0"
   license "Apache-2.0"
 
   # MoonBit only ships an arm64 toolchain for macOS, so there is no Intel build.
@@ -10,8 +10,8 @@ class Ctt < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/foresta/ctt/releases/download/v#{version}/ctt-v#{version}-darwin-arm64.tar.gz"
-      sha256 "PLACEHOLDER_ARM64_SHA256"
+      url "https://github.com/foresta/ctt/releases/download/v0.2.0/ctt-v0.2.0-darwin-arm64.tar.gz"
+      sha256 "d3ff301400ea9e710b998e61fb4e6f4f56baf6e9178e3a43d56fc93b078d55fe"
     end
   end
 
